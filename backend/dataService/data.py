@@ -65,21 +65,25 @@ def get_bucket_files(bucketName):
     files = [obj.object_name for obj in objects]
     return files
 
-@app.route('/download/<name>', methods=['get'])
-def download_dataset(name):
-    files = get_bucket_files(name)
+@app.route('/download/all/<bucketname>', methods=['get'])
+def download_dataset_all(bucketname):
+    files = get_bucket_files(bucketname)
 
     with tempfile.TemporaryDirectory() as temp_dir:
-        zip_file_name = name+".zip"
+        zip_file_name = bucketname+".zip"
         zip_file_path = os.path.join(temp_dir, zip_file_name)
         with zipfile.ZipFile(zip_file_path, 'w') as zipf:
             for file in files:
                 temp_file_path = os.path.join(temp_dir, file)
-                minio_client.fget_object(name, file, temp_file_path)
+                minio_client.fget_object(bucketname, file, temp_file_path)
                 zipf.write(temp_file_path, file)
 
         return send_file(zip_file_path, as_attachment=True)
  
+@app.route('/download/sample/<bucketname>', methods=['get'])
+def download_dataset_sample(bucketname):
+    return "Not Implemented yet"
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5002, host='0.0.0.0')
