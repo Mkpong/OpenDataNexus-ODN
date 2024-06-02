@@ -55,7 +55,7 @@ def upload_file():
 
     try:
         saveFile(bucket_name, file_name, file)
-        return jsonify({"message": "File uploaded successfully"}), 200
+        return jsonify({"message": "File uploaded successfully", "filename": file_name}), 200
 
     except S3Error as e:
         return jsonify({"error": str(e)}), 500
@@ -65,7 +65,7 @@ def get_bucket_files(bucketName):
     files = [obj.object_name for obj in objects]
     return files
 
-@app.route('/download/all/<bucketname>', methods=['get'])
+@app.route('/api/data/download/all/<bucketname>', methods=['get'])
 def download_dataset_all(bucketname):
     files = get_bucket_files(bucketname)
 

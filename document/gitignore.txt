@@ -1,0 +1,2 @@
+이미 추적된 파일 제거
+git rm -r --cached folder_or_file_path
