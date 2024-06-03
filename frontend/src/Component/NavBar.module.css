@@ -1,0 +1,41 @@
+.button1 {
+    margin-right: 10px;
+    border: 1px solid black;
+}
+
+.logo {
+    margin-left: 40px;
+}
+
+.dropdown {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin-right: 20px;
+    margin-left: 10px;
+}
+
+.dropdownImage {
+    max-width: 30px;
+    height: auto;
+}
+
+.mainImage {
+    max-height: 40px;
+    width: auto;
+}
+
+/* 화살표 아이콘을 숨김 */
+.dropdown-toggle::after {
+    display: none !important;
+}
+
+.navbar {
+    background-color: white;
+}
+
+.dropdown-menu-left-bottom {
+    top: calc(100% + 0.25rem) !important;
+    left: 0 !important;
+    right: auto !important;
+}

@@ -1,0 +1,11 @@
+.commentWriter {
+    text-align: left;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.commentDate {
+    display: flex;
+    justify-content: flex-start;
+    color: #aaa;
+}

@@ -1,0 +1,63 @@
+import React from "react";
+import styles from './InformationTab.module.css';
+import { Container, Row, Col, Button } from "react-bootstrap";
+import { useState } from "react";
+
+function Information() {
+    return (
+        <Row className={styles.infoRow}>
+            <Container>
+                <Row>
+                    대충 어쩌구 저쩌구~
+                </Row>
+            </Container>
+        </Row>
+    );
+}
+
+function InformationTab() {
+
+    const [open1, setOpen1] = useState(false);
+    const [open2, setOpen2] = useState(false);
+    const [open3, setOpen3] = useState(false);
+
+    return (
+        <Container>
+            <Row className={styles.buttonRow}>
+                <Col>
+                    <Button variant='none' onClick={() => setOpen1(!open1)} className={styles.infoButton}>
+                        <div className="d-flex justify-content-between align-items-center">
+                            <span>데이터 개요</span>
+                            <img src='../../../image/downButton.png' alt="Down" className={styles.downButton} />
+                        </div>
+                    </Button>
+                </Col>
+            </Row>
+                {open1 && (<Information />)}
+            <Row className={styles.buttonRow}>
+                <Col>
+                    <Button variant='none' onClick={() => setOpen2(!open2)} className={styles.infoButton}>
+                        <div className="d-flex justify-content-between align-items-center">
+                            <span>데이터 세부 정보</span>
+                            <img src='../../../image/downButton.png' alt="Down" className={styles.downButton} />
+                        </div>
+                    </Button>
+                </Col>
+            </Row>
+                {open2 && (<Information />)}
+            <Row className={styles.buttonRow}>
+                <Col>
+                    <Button variant='none' onClick={() => setOpen3(!open3)} className={styles.infoButton}>
+                        <div className="d-flex justify-content-between align-items-center">
+                            <span>활용 방안</span>
+                            <img src='../../../image/downButton.png' alt="Down" className={styles.downButton} />
+                        </div>
+                    </Button>
+                </Col>
+            </Row>
+                {open3 && (<Information />)}
+        </Container>
+    );
+}
+
+export default InformationTab;

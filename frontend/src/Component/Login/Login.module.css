@@ -1,0 +1,40 @@
+.loginButton {
+    margin-top: 50px;
+}
+
+.signupButton {
+    margin-top: 20px;
+}
+
+.loginContainer {
+    margin-top : 100px;
+}
+
+.registText {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.emailForm {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+
+.passwordForm {
+    margin-top: 10px;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+/* Link button styles */
+.linkButton {
+    color: #007bff; /* 링크 색상 */
+    text-decoration: none; /* 밑줄 제거 */
+    transition: color 0.3s ease; /* 색상 변화 애니메이션 */
+  }
+  
+  .linkButton:hover {
+    color: #0056b3; /* 호버 시 색상 변경 */
+  }

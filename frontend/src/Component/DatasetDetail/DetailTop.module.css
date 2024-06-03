@@ -1,0 +1,70 @@
+.datasetDetailContainer {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .detailCard {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .datasetImage {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .tags {
+    margin-bottom: 10px;
+    margin-left: 20px;
+  }
+  
+  .tag {
+    display: inline-block;
+    background-color: #f1f1f1;
+    border-radius: 20px;
+    padding: 5px 10px;
+    margin-right: 5px;
+    font-size: 14px;
+  }
+  
+  .datasetTitle {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    margin-left: 20px;
+  }
+  
+  .datasetInfo {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 10px;
+    margin-left: 20px;
+  }
+  
+  .datasetDetails {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 10px;
+    margin-left: 20px;
+  }
+  
+  .buttons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .downloadButton {
+    margin-right: 10px;
+  }
+  
+
+
+  .heartIcon {
+    width: 150%;
+  }
+
+  

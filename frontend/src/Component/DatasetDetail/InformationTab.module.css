@@ -1,0 +1,15 @@
+.infoButton {
+    width: 100%;
+}
+
+.downButton {
+    width: 3%;
+}
+
+.buttonRow{
+    margin-top: 10px;
+}
+
+.infoRow{
+    margin-left: 10px;
+}

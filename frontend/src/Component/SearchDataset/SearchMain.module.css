@@ -1,0 +1,100 @@
+.serachIcon {
+    width: 50%;
+}
+
+.inputForm {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.searchTitle {
+    font-weight: bold;
+    font-size: 20px;
+    text-align: start;
+    margin-top: 10px;
+}
+
+.searchMainContainer {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.resultMainContainer {
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.roundLabel {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 2px solid #000;
+    border-radius: 20px;
+    font-size: 16px;
+    text-align: center;
+    color: #000;
+}
+
+.tagLabel{
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #f3f5f7; /* 배경색 */
+    border-radius: 20px; /* 둥근 모서리 */
+    font-size: 16px; /* 폰트 크기 */
+    font-weight: bold; /* 폰트 굵기 */
+    color: #555555; /* 폰트 색상 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+}
+
+.cardTitle {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.cardImg{
+    width: 30%;
+}
+
+.tagRow {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.downloadImg {
+    width: 8%;
+    margin-right: 3px;
+}
+
+.card {
+    border-radius: 20px;
+    margin-bottom: 40px;
+    height: 300px;
+    object-fit: cover;
+    position: relative;
+}
+
+.resultTitle {
+    text-align: start;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.resultRow {
+    margin-bottom: 10px;
+}
+
+.horizontalLayout {
+    display: flex;
+    align-items: center;
+}
+
+.sortButton {
+    min-width: 80px;
+    margin-left: 10px;
+    width: 20%;
+}
+
+.sortForm {
+    width: 80%;
+}

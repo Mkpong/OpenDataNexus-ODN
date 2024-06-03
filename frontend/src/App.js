@@ -1,23 +1,46 @@
 import logo from './logo.svg';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Routes, Route, Link} from "react-router-dom"
+import { Row, Col } from 'react-bootstrap';
+import NavBar from './Component/NavBar';
+import { useState } from 'react';
+import Main from './Component/Main/Main';
+import Login from './Component/Login/Login'
+import BottomBar from './Component/BottomBar';
+import Register from './Component/Login/Register';
+import DetailMain from './Component/DatasetDetail/DetailMain';
+import SearchMain from './Component/SearchDataset/SearchMain';
+import SideBar from './Component/SideBar';
+
 
 function App() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+      setSidebarOpen(!sidebarOpen);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <container>
+        <Row>
+          <Col>
+            <NavBar toggleSidebar={toggleSidebar}/>
+            <Routes>
+              <Route path="/" element={<Main />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/datasets/:id" element={<DetailMain />} />
+              <Route path="/search" element={<SearchMain />} />
+            </Routes>
+            <BottomBar />
+          </Col>
+          {sidebarOpen && (
+            <Col lg={2}><SideBar /></Col>
+            )}
+        </Row>
+      </container>
     </div>
   );
 }
