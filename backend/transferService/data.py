@@ -4,13 +4,20 @@ from minio.error import S3Error
 import os
 import tempfile
 import zipfile
+import jwt
+from flask_cors import CORS
+
+jwt_secretKey = "va20ofsl3r08h3n1rjjl"
 
 app = Flask(__name__)
+CORS(app)
 
 minio_client = Minio(
         '127.0.0.1:9005',
-        access_key=os.getenv('MINIO_ROOT_USER'),
-        secret_key=os.getenv('MINIO_ROOT_PASSWORD'),
+        # access_key=os.getenv('MINIO_ROOT_USER'),
+        # secret_key=os.getenv('MINIO_ROOT_PASSWORD'),
+        access_key='minioadmin',
+        secret_key='minioadmin',
         secure=False
 )
 
