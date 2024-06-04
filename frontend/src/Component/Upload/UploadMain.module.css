@@ -1,0 +1,62 @@
+.row1 {
+    margin-top : 10px;
+}
+
+.topContainer {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+}
+
+.fileForm{
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.bodyContainer {
+    margin-top: 20px;
+}
+
+.saveButton{
+    display: flex;
+    justify-content: flex-start;
+    height: 50%;
+    margin-top: 3%;
+}
+
+.mainTitle {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.mainTop{
+    margin-bottom: 10px;
+}
+
+.uploadTitle {
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 5px;
+}
+
+.uploadImage {
+    width: 100%;
+}
+
+.fileList{
+    width: 100%;
+    max-width: 500px; /* 너비 제한 */
+    margin: 0 auto; /* 가운데 정렬 */
+    padding: 0;
+}
+
+.fileItem{
+    white-space: nowrap; /* 줄바꿈 방지 */
+    overflow: hidden; /* 넘치는 부분 숨기기 */
+    text-overflow: ellipsis; /* 줄임표(...) 표시 */
+    border: 1px solid #ddd; /* 예제: 경계선 추가 */
+    padding: 5px 10px; /* 예제: 여백 추가 */
+    margin: 5px 0; /* 예제: 항목 간격 추가 */
+}

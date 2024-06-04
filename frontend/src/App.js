@@ -12,6 +12,7 @@ import Register from './Component/Login/Register';
 import DetailMain from './Component/DatasetDetail/DetailMain';
 import SearchMain from './Component/SearchDataset/SearchMain';
 import SideBar from './Component/SideBar';
+import UploadMain from './Component/Upload/UploadMain';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/datasets/:id" element={<DetailMain />} />
               <Route path="/search" element={<SearchMain />} />
+              <Route path="/upload" element={<UploadMain />} />
             </Routes>
             <BottomBar />
           </Col>

@@ -15,6 +15,9 @@ function SideBar() {
             <Nav.Item>
               <Nav.Link href="/search">Search</Nav.Link>
             </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="/upload">Upload</Nav.Link>
+            </Nav.Item>
             <Nav.Item className={styles.mainMenu}>
               AI Train
             </Nav.Item>

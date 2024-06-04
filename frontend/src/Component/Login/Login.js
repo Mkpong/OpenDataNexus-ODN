@@ -1,23 +1,39 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import styles from './Login.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import {loginUser, logoutUser} from '../../Actions/UserAction';
+import allActions from '../../Store';
+
+// userLogin, userLogout 추가 해야함
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // 여기서 로그인 요청을 보내고 처리하는 로직을 구현합니다.
-    console.log('Email:', email);
-    console.log('Password:', password);
+    axios.post("http://220.149.232.224/api/user/login" , {"email": email, "passwd": password})
+    .then((response) => {
+      console.log(response.data);
+      const token = response.data.token;
+      const userData = {"email": response.data.email, "token": token};
+      dispatch(allActions.UserAction.loginUser(userData));
+      navigate("/");
+    }).catch((error) => {
+      if(error.response.status === 401){
+        alert("아이디 또는 비밀번호가 일치하지 않습니다!");
+      }
+    })
   };
 
-  const handleSignup = () => {
-    // 회원가입 페이지로 이동하는 로직을 추가합니다.
-    console.log('Redirect to signup page');
-  };
 
   return (
     <Container className={styles.loginContainer}>
@@ -60,7 +76,7 @@ const Login = () => {
                     회원가입 후 많은 데이터 셋을 다운받아 보세요!
                 </Col>
             </Row>
-            <Button as={Link} to="/register" variant="secondary" onClick={handleSignup} className={styles.signupButton}>
+            <Button as={Link} to="/register" variant="secondary" className={styles.signupButton}>
               Sign Up
             </Button>
             <div className="mt-3">

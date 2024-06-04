@@ -39,3 +39,7 @@
     left: 0 !important;
     right: auto !important;
 }
+
+.buttonEmail {
+    margin-right: 10px;
+}

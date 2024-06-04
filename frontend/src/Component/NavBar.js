@@ -4,8 +4,30 @@ import { Link } from "react-router-dom";
 import styles from './NavBar.module.css';
 import { useState } from "react";
 import SideBar from "./SideBar";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import UserAction from "../Actions/UserAction";
+import allActions from "../Store";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function NavBar({toggleSidebar}){
+    const currentUser = useSelector(state => state.currentUser);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      console.log(currentUser);
+    } ,[currentUser])
+
+    const logout = () => {
+      const confirmLogout = window.confirm("정말 로그아웃하시겠습니까?");
+      if (confirmLogout) {
+          dispatch(allActions.UserAction.logoutUser());
+          navigate("/");
+      }
+    }
+
     return(
         <Container className='mb-2'>
         <Navbar bg="light" expand="lg" className={styles.navbar}>
@@ -21,7 +43,10 @@ function NavBar({toggleSidebar}){
             >
             </Nav>
             <Nav>
-            <Button as={Link} to="/login" variant="light" className={styles.button1}>로그인/회원가입</Button>
+            {!currentUser.login ? <Button as={Link} to="/login" variant="light" className={styles.button1}>로그인/회원가입</Button> : 
+            <><Button variant="light" className={styles.buttonEmail}>{currentUser.user.email}님</Button>
+              <Button onClick={logout} variant="light" className={styles.button1}>로그아웃</Button>
+            </> }
             </Nav>
             <Button variant="light" onClick={toggleSidebar}>
                 <img src="../../image/dropdown.png" alt="Dropdown Image" className={styles.dropdownImage}/> {/* 이미지 */}
