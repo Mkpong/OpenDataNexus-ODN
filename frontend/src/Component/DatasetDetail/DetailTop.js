@@ -2,11 +2,13 @@ import React from 'react';
 import { Container, Row, Col, Button, Image } from 'react-bootstrap';
 import styles from './DetailTop.module.css'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const handleDownload = (bucketName) => {
+
+const handleDownload = (bucketName, bucketId) => {
   // 서버에 GET 요청을 보냅니다.
   axios({
-    url: 'http://220.149.232.224/api/data/download/all/' + bucketName,
+    url: 'http://220.149.232.224/api/transfer/download/all/' + bucketId,
     method: 'GET',
     responseType: 'blob'
   }).then(response => {
@@ -18,14 +20,20 @@ const handleDownload = (bucketName) => {
     link.setAttribute('download', bucketName + '.zip');  // 실제 파일명을 지정합니다.
     document.body.appendChild(link);
     link.click();
+    axios.put(`http://220.149.232.224/api/dataset/data/downloadcnt/${bucketId}`)
   }).catch(error => {
     // 파일 다운로드가 실패했을 때의 처리
     alert("다운로드 할 수 없습니다!")
   });
 };
 
+const DetailTop = (props) => {
+  const navigate = useNavigate();
 
-const DetailTop = () => {
+  const handleUpdate = (bucketName, id) => {
+    navigate(`/update/${id}`);
+  }
+
   return (
     <Container className={styles.datasetDetailContainer}>
       <Row className="justify-content-center">
@@ -36,24 +44,26 @@ const DetailTop = () => {
             </Col>
             <Col md={10}>
               <Row className={styles.tags}>
-                <Col md={2} className={styles.tag}>#코퍼스</Col>
-                <Col md={2} className={styles.tag}>#감성대화</Col>
-                <Col md={2} className={styles.tag}>#감성 챗봇</Col>
-                <Col md={2} className={styles.tag}>#우울증 예방</Col>
+                <Col md={2} className={styles.tag}>#Tag1</Col>
+                <Col md={2} className={styles.tag}>#Tag2</Col>
+                <Col md={2} className={styles.tag}>#Tag3</Col>
+                <Col md={2} className={styles.tag}>#Tag4</Col>
               </Row>
-              <Row className={styles.datasetTitle}>감성 대화 말뭉치</Row>
+              <Row className={styles.datasetTitle}>{props.dataset.bucketName}</Row>
               <Row className={styles.datasetInfo}>
-                분야: 한국어 , 유형: 오디오, 텍스트
+                분야: {props.dataset.field} , 유형: {props.dataset.type}
               </Row>
               <Row className={styles.datasetDetails}>
-                구축년도: 2020, 갱신년월: 2022-12,
-                조회수: 82,909, 
-                다운로드: 10,136, 
-                용량: 20.35 MB
+                구축일자: {props.dataset.createAt}, {props.dataset.updateAt && <>갱신일자: {props.dataset.updateAt}, </>}
+                다운로드: {props.dataset.downloadCnt}회, 
+                용량: {props.dataset.size}MB
               </Row>
               <Row className={styles.buttons}>
-                <Col md={{ span: 2, offset: 10 }} className="d-flex justify-content-end">
-                <Button variant="danger" className={styles.downloadButton} onClick={() => handleDownload("test-bucket")}>다운로드</Button>
+                <Col md={{span:4, offset:8}} className="d-flex justify-content-end">
+                {props.dataset.isModify && (
+                  <Button variant="primary" className={styles.downloadButton} onClick={() => handleUpdate(props.dataset.bucketName, props.dataset.id)}>추가</Button>
+                )}
+                <Button variant="danger" className={styles.downloadButton} onClick={() => handleDownload(props.dataset.bucketName, props.dataset.bucketId)}>다운로드</Button>
                 </Col>
               </Row>
             </Col>

@@ -19,17 +19,17 @@ function SideBar() {
               <Nav.Link href="/upload">Upload</Nav.Link>
             </Nav.Item>
             <Nav.Item className={styles.mainMenu}>
-              AI Train
+              AI(Beta)
             </Nav.Item>
             <hr />
             <Nav.Item>
               <Nav.Link href="/search">Train Model</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link href="/search">Test Model</Nav.Link>
+              <Nav.Link href="/ai/test/image">Test Model: image</Nav.Link>
             </Nav.Item>
             <Nav.Item className={styles.mainMenu}>
-              Test Model
+              MyPage
             </Nav.Item>
             <hr />
             <Nav.Item>

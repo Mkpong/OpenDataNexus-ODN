@@ -3,19 +3,31 @@ import styles from './InformationTab.module.css';
 import { Container, Row, Col, Button } from "react-bootstrap";
 import { useState } from "react";
 
-function Information() {
+function Information(props) {
+    const content = props.content
     return (
+        <>
+        {content ? (
         <Row className={styles.infoRow}>
-            <Container>
-                <Row>
-                    대충 어쩌구 저쩌구~
-                </Row>
-            </Container>
+        <Container>
+            <Row>
+                {props.content}
+            </Row>
+        </Container>
+        </Row>) : (
+        <Row className={styles.infoRow}>
+        <Container>
+            <Row>
+                Not Content
+            </Row>
+        </Container>
         </Row>
+        )}
+        </>
     );
 }
 
-function InformationTab() {
+function InformationTab(props) {
 
     const [open1, setOpen1] = useState(false);
     const [open2, setOpen2] = useState(false);
@@ -33,7 +45,7 @@ function InformationTab() {
                     </Button>
                 </Col>
             </Row>
-                {open1 && (<Information />)}
+                {open1 && (<Information content={props.dataset.overview} />)}
             <Row className={styles.buttonRow}>
                 <Col>
                     <Button variant='none' onClick={() => setOpen2(!open2)} className={styles.infoButton}>
@@ -44,7 +56,7 @@ function InformationTab() {
                     </Button>
                 </Col>
             </Row>
-                {open2 && (<Information />)}
+                {open2 && (<Information content={props.dataset.details} />)}
             <Row className={styles.buttonRow}>
                 <Col>
                     <Button variant='none' onClick={() => setOpen3(!open3)} className={styles.infoButton}>
@@ -55,7 +67,7 @@ function InformationTab() {
                     </Button>
                 </Col>
             </Row>
-                {open3 && (<Information />)}
+                {open3 && (<Information content={props.dataset.useMethods} />)}
         </Container>
     );
 }

@@ -13,6 +13,8 @@ import DetailMain from './Component/DatasetDetail/DetailMain';
 import SearchMain from './Component/SearchDataset/SearchMain';
 import SideBar from './Component/SideBar';
 import UploadMain from './Component/Upload/UploadMain';
+import UpdateMain from './Component/Update/UpdateMain';
+import TestMain from './Component/AITest/TestMain';
 
 
 function App() {
@@ -35,6 +37,8 @@ function App() {
               <Route path="/datasets/:id" element={<DetailMain />} />
               <Route path="/search" element={<SearchMain />} />
               <Route path="/upload" element={<UploadMain />} />
+              <Route path="/update/:id" element={<UpdateMain />} />
+              <Route path="/ai/test/:type" element={<TestMain />} />
             </Routes>
             <BottomBar />
           </Col>

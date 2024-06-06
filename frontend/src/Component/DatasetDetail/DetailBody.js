@@ -5,7 +5,7 @@ import { useState } from "react";
 import InformationTab from "./InformationTab";
 import CommentTab from "./CommentTab";
 
-function DetailBody() {
+function DetailBody(props) {
 
     const [activeTab, setActiveTab] = useState('tab1');
 
@@ -26,7 +26,7 @@ function DetailBody() {
                         onSelect={(k) => handleTabChange(k)}
                         >
                         <Tab eventKey="tab1" title="Information" className='mt-2'>
-                            <InformationTab />
+                            <InformationTab dataset={props.dataset} />
                         </Tab>
                         <Tab eventKey="tab2" title="Comment" className="mt-2">
                             <CommentTab />
