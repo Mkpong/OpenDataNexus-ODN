@@ -83,6 +83,8 @@ def add_metadata():
     type = metadata.get('type')
     isModify = metadata.get('isModify')
 
+    print("userEmail : " ,userEmail, flush=True)
+
 
     # 이미 존재하는 버킷인지 확인
     bucket = Metadata.query.filter_by(bucketName=bucketName).first()
@@ -146,6 +148,54 @@ def find_dataset_by_id():
     response.headers.add("Access-Control-Allow-Origin", '*')
     return response
 
+@app.route("/api/dataset/metadata", methods=['delete'])
+def delete_dataset():
+    id = request.args.get('id')
+
+    metadata = Metadata.query.filter_by(id=id).first()
+    if not metadata:
+        response = make_response(jsonify({"message" : "Dataset을 찾을 수 없습니다!"}), 404)
+        response.headers.add("Access-Control-Allow-Origin", '*')
+        return response
+
+    bucketId = metadata.bucketId
+
+    # 버킷에서 해당 데이터 셋 삭제
+    response_transfer = requests.delete(f"http://220.149.232.224/api/transfer?id={bucketId}")
+    if response_transfer.status_code == 500:
+        # 버킷 삭제 실패시 오류 반환
+        response = make_response(jsonify({"message" : "버킷 삭제 실패!"}), 500)
+        response.headers.add("Access-Control-Allow-Origin", '*')
+        return response
+    # elif response_transfer.status_code == 404:
+    #     db.session.delete(metadata)
+    #     db.session.commit()
+    #     response = make_response(jsonify({"message" : "버켓이 존재하지 않아 metadata 삭제"}), 200)
+    #     response.headers.add("Access-Control-Allow-Origin", '*')
+    #     return response
+
+    # 해당 dataset id를 가지고 있는 모든 comment 삭제 로직 구현
+    response_comment = requests.delete(f"http://220.149.232.224/api/comment/all?id={metadata.id}")
+    if response_comment == 500:
+        response = make_response(jsonify({"message" : "Comment 삭제 실패!"}), 500)
+        response.headers.add("Access-Control-Allow-Origin", '*')
+        return response
+    elif response_comment == 404:
+        db.session.delete(metadata)
+        db.session.commit()
+        response = make_response(jsonify({"message" : "Comment가 존재하지 않아 metadata 삭제"}), 200)
+        response.headers.add("Access-Control-Allow-Origin", '*')
+        return response       
+
+    db.session.delete(metadata)
+    db.session.commit()
+
+    response = make_response(jsonify({"message" : "Dataset 삭제 성공"}), 200)
+    response.headers.add("Access-Control-Allow-Origin", '*')
+    return response
+
+    
+
 @app.route("/api/dataset/all", methods=['get'])
 def get_all_dataset():
     datasets = Metadata.query.all()
@@ -176,7 +226,9 @@ def update_dataset_size(bucketid):
     if not bucket:
         return jsonify({"message" : "Not Found bucket"}), 404
     response = requests.get(f"http://220.149.232.224/api/transfer/bucketsize?bucketid={bucketid}")
-    bucket.size = response.json().get('size')
+    size = response.json().get('size')
+    if size:
+        bucket.size = size
     db.session.commit()
 
     return jsonify({"message": "size update complete"}), 200

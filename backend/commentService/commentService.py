@@ -105,6 +105,21 @@ def delete_comment():
         response.headers.add("Access-Control-Allow-Origin", '*')
         return response
 
+@app.route("/api/comment/all", methods=['delete'])
+def delete_all_comment():
+    metadataId = request.args.get('id')
+    comments = Comment.query.filter_by(metadataId=metadataId).all()
+    print("comments",comments, flush=True)
+    for comment in comments:
+        print(comment.content, flush=True)
+        db.session.delete(comment)
+    
+    db.session.commit()
+
+    return jsonify({"message": "모든 댓글 삭제 완료"}), 200
+
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

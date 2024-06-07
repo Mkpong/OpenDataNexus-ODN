@@ -87,6 +87,27 @@ def download_dataset_all(bucketid):
 
         return send_file(zip_file_path, as_attachment=True)
 
+@app.route("/api/transfer", methods=['delete'])
+def delete_bucket():
+    id = request.args.get('id')
+
+    # 버킷이 존재하지 않으면 404 반환
+    if not bucket_exists(id):
+        return jsonify({"message" : "버킷이 존재하지 않습니다!"}), 404
+
+    try:
+        objects = minio_client.list_objects(id, recursive=True)
+        for obj in objects:
+            minio_client.remove_object(id, obj.object_name)
+    except S3Error as e:
+        return jsonify({"error": str(e)}), 500
+
+    try:
+        minio_client.remove_bucket(id)
+        return jsonify({"message" : "{id} 버킷 삭제 완료"}), 200
+    except S3Error as e:
+        return jsonify({"error": str(e)}), 500
+
 @app.route("/api/transfer/bucketsize" , methods=['get'])
 def get_bucket_size():
     bucketId = request.args.get('bucketid')
