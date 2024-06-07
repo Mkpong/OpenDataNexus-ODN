@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Button, Image } from 'react-bootstrap';
 import styles from './DetailTop.module.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 const handleDownload = (bucketName, bucketId) => {
@@ -29,9 +30,25 @@ const handleDownload = (bucketName, bucketId) => {
 
 const DetailTop = (props) => {
   const navigate = useNavigate();
+  const [userEmail, setUserEmail] = useState("");
+  const currentUser = useSelector(state => state.currentUser);
 
   const handleUpdate = (bucketName, id) => {
     navigate(`/update/${id}`);
+  }
+
+  useEffect(() => {
+    if(currentUser.login){
+      setUserEmail(currentUser.user.email);
+    }
+  }, [])
+
+  const handleDelete = () => {
+    axios.delete(`http://220.149.232.224/api/dataset/metadata?id=${props.dataset.id}`)
+    .then((response) => {
+      console.log(response);
+      window.location.href = "/";
+    }).catch((error) => console.log(error));
   }
 
   return (
@@ -63,6 +80,7 @@ const DetailTop = (props) => {
                 {props.dataset.isModify && (
                   <Button variant="primary" className={styles.downloadButton} onClick={() => handleUpdate(props.dataset.bucketName, props.dataset.id)}>추가</Button>
                 )}
+                {(userEmail === props.dataset.userEmail) && (<Button variant="primary" className={styles.downloadButton} onClick={() => handleDelete()}>삭제</Button>)}
                 <Button variant="danger" className={styles.downloadButton} onClick={() => handleDownload(props.dataset.bucketName, props.dataset.bucketId)}>다운로드</Button>
                 </Col>
               </Row>

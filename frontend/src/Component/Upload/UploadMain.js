@@ -14,7 +14,10 @@ function UploadMain() {
     const navigate = useNavigate();
 
     useEffect(() => {
-      console.log(currentUser);
+      setMetadata({
+        ...metadata,
+        ["userEmail"]: currentUser.user.email
+    })
     } ,[currentUser])
 
     const [metadata, setMetadata] = useState({
@@ -110,13 +113,6 @@ function UploadMain() {
 
     const handleSave = async (event) => {
     event.preventDefault();
-
-    if(currentUser.login){
-        setMetadata({
-            ...metadata,
-            ["userEmail"]: currentUser.user.email
-        })
-    }
     // 파일을 처리하는 로직을 여기에 추가합니다.
     try {
         const response = await axios.post('http://220.149.232.224/api/dataset/metadata', metadata);

@@ -29,7 +29,7 @@ function DetailBody(props) {
                             <InformationTab dataset={props.dataset} />
                         </Tab>
                         <Tab eventKey="tab2" title="Comment" className="mt-2">
-                            <CommentTab />
+                            <CommentTab dataset={props.dataset} />
                         </Tab>
                         </Tabs>
                     </Row>
