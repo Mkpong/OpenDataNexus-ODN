@@ -34,7 +34,7 @@ def bucket_exists(bucketName):
 def create_bucket(bucketName):
     #create bucket
     minio_client.make_bucket(bucketName)
-    print(f"Bucket '{bucket_name}' created successfully")
+    print(f"Bucket '{bucketName}' created successfully")
 
 def saveFile(bucketName, fileName, file):
     _, temp_file_path = tempfile.mkstemp()
@@ -44,7 +44,7 @@ def saveFile(bucketName, fileName, file):
 
     os.remove(temp_file_path)    
 
-@app.route('/upload', methods=['POST'])
+@app.route('/api/transfer/upload', methods=['POST'])
 def upload_file():
     # file, bucket loading
     file = request.files.get('file')
@@ -72,25 +72,37 @@ def get_bucket_files(bucketName):
     files = [obj.object_name for obj in objects]
     return files
 
-@app.route('/api/data/download/all/<bucketname>', methods=['get'])
-def download_dataset_all(bucketname):
-    files = get_bucket_files(bucketname)
+@app.route('/api/transfer/download/all/<bucketid>', methods=['get'])
+def download_dataset_all(bucketid):
+    files = get_bucket_files(bucketid)
 
     with tempfile.TemporaryDirectory() as temp_dir:
-        zip_file_name = bucketname+".zip"
+        zip_file_name = bucketid+".zip"
         zip_file_path = os.path.join(temp_dir, zip_file_name)
         with zipfile.ZipFile(zip_file_path, 'w') as zipf:
             for file in files:
                 temp_file_path = os.path.join(temp_dir, file)
-                minio_client.fget_object(bucketname, file, temp_file_path)
+                minio_client.fget_object(bucketid, file, temp_file_path)
                 zipf.write(temp_file_path, file)
 
         return send_file(zip_file_path, as_attachment=True)
- 
-@app.route('/download/sample/<bucketname>', methods=['get'])
-def download_dataset_sample(bucketname):
-    return "Not Implemented yet"
 
+@app.route("/api/transfer/bucketsize" , methods=['get'])
+def get_bucket_size():
+    bucketId = request.args.get('bucketid')
+    if not bucketId:
+        return jsonify({"Message": "Cannot Find Bucket"}), 404
+    
+    try:
+        bucket_size = 0
+        objects = minio_client.list_objects(bucketId, recursive=True)
+        for obj in objects:
+            bucket_size += obj.size
+        bucket_size = bucket_size / (1024*1024)
+        bucket_size_str = "{:.2f}".format(bucket_size)
+        return jsonify({"size": bucket_size_str}), 200
+    except S3Error as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, port=5002, host='0.0.0.0')

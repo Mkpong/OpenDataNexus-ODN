@@ -1,8 +1,11 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, timedelta
+from flask_cors import CORS
+import jwt
 
 app = Flask(__name__)
+CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:Dlwodud3424!@127.0.0.1/userODN'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -21,12 +24,26 @@ class User(db.Model):
         self.email = email
         self.password = password
 
+
+@app.route('/api/user/register/email', methods=['post'])
+def check_email():
+    data = request.get_json()
+    email = data.get('email')
+    user = User.query.filter_by(email=email).first()
+    print(user)
+    if not user:
+        return jsonify({'message': 'Ok'}), 200
+    else:
+        return jsonify({'message': 'alreadyExist'}), 200
+    return "Success"
+
 @app.route('/api/user/register' , methods=['post'])
 def register():
     data = request.get_json()
     name = data.get('name')
     email = data.get('email')
-    password = data.get('password')
+    password = data.get('passwd')
+    print(password)
 
     new_user = User(name=name, email=email, password=password)
 
@@ -35,24 +52,12 @@ def register():
 
     return jsonify({"message": "User added successfully!"}), 201
 
-@app.route('/api/user/register/test', methods=['get'])
-def register_test():
-    name = "이재영"
-    email = "leeja042499@gmail.com"
-    password = "1234"
-
-    new_user = User(name = name, email=email, password=password)
-    db.session.add(new_user)
-    db.session.commit()
-
-    return "SUCCESS"
-
 @app.route('/api/user/login' , methods=['post'])
 def login():
     data = request.get_json()
     email = data.get('email')
-    password = data.get('password')
-
+    password = data.get('passwd')
+    print(email, password)
     user = User.query.filter_by(email=email).first()
 
     if not user or not user.password == password:
@@ -71,21 +76,9 @@ def login():
     token = jwt.encode(payload_jwt, jwt_secretKey, algorithm='HS512', headers=header_jwt)
     print(token)
 
-    return jsonify({'message': '로그인이 성공적으로 완료되었습니다.'}), 200
-
-@app.route('/api/user/login/test' , methods=['get'])
-def login_test():
-    email = "leeja042499@gmail.com"
-    password = "1234"
-
-    user = User.query.filter_by(email=email).first()
-
-    if not user or not user.password == password:
-        return "Fail"
-
-    return "Login Success"
-
-
+    return jsonify({'message': '로그인이 성공적으로 완료되었습니다.',
+                    'email': email,
+                    'token': token}), 200
 
 if __name__ == '__main__':
     with app.app_context():
