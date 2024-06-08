@@ -14,10 +14,12 @@ function UploadMain() {
     const navigate = useNavigate();
 
     useEffect(() => {
-      setMetadata({
-        ...metadata,
-        ["userEmail"]: currentUser.user.email
-    })
+        if(currentUser.login){
+            setMetadata({
+                ...metadata,
+                ["userEmail"]: currentUser.user.email
+            })
+        }
     } ,[currentUser])
 
     const [metadata, setMetadata] = useState({
@@ -176,13 +178,13 @@ function UploadMain() {
                     <Form.Select aria-label="Default select example" value={metadata.field} onChange={onChange} id="field">
                         <option value="">---</option>
                         <option value="한국어">한국어</option>
-                        <option>영상이미지</option>
-                        <option>헬스케어</option>
-                        <option>교통물류</option>
-                        <option>재난안전환경</option>
-                        <option>농축수산</option>
-                        <option>문화관광</option>
-                        <option>스포츠</option>
+                        <option value="영상이미지">영상이미지</option>
+                        <option value="헬스케어">헬스케어</option>
+                        <option value="교통물류">교통물류</option>
+                        <option value="재난안전환경">재난안전환경</option>
+                        <option value="농축수산">농축수산</option>
+                        <option value="문화관광">문화관광</option>
+                        <option value="스포츠">스포츠</option>
                     </Form.Select>
                     </Form.Group>
                 </Col>

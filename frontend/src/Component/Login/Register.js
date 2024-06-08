@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import styles from './Register.module.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [confirmPassword , setConfirmPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(false);
+  const navigate = useNavigate();
 
   const [registerData, setRegisterData] = useState({
     'email': "",
@@ -53,12 +55,14 @@ const Register = () => {
     else if(!isEmailValid){
       alert("이메일 확인을 진행해주세요")
     }
-
+    else {
     // 회원가입 요청을 보내고 처리하는 로직을 구현합니다.
     axios.post("http://220.149.232.224/api/user/register", registerData)
     .then((response) => {
       console.log(response.data.message);
+      navigate("/");
     }).catch((error) => {console.log(error)})
+    }
   };
 
   return (
