@@ -1,0 +1,15 @@
+FROM python:3.9.18
+WORKDIR /app
+COPY . /app
+RUN pip install flask
+RUN pip install flask_sqlalchemy
+RUN pip install flask_cors
+RUN pip install requests
+RUN apt-get update && apt-get install -y \
+    python3-dev \
+    default-libmysqlclient-dev \
+    build-essential \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN pip install mysqlclient
+CMD ["python" , "./datasetService.py"]
+

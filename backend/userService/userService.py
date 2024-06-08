@@ -6,7 +6,7 @@ import jwt
 
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:Dlwodud3424!@127.0.0.1/userODN'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:Dlwodud3424!@220.149.232.224:3307/userODN'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -83,4 +83,4 @@ def login():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True, port=5001, host='0.0.0.0')
+    app.run(debug=True, port=5000, host='0.0.0.0')

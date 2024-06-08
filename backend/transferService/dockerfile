@@ -1,0 +1,11 @@
+FROM python:3.9.18
+
+WORKDIR /app
+COPY . /app
+
+RUN pip install flask
+RUN pip install minio
+RUN pip install flask_cors
+
+CMD ["python", "./transferService.py"]
+

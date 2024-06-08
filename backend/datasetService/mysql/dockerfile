@@ -1,0 +1,9 @@
+FROM mysql:5.7
+
+COPY ./my.cnf /etc/mysql/my.cnf
+
+ENV MYSQL_ROOT_PASSWORD=Dlwodud3424!
+ENV MYSQL_DATABASE=datasetODN
+ENV MYSQL_USER=admin
+ENV MYSQL_PASSWORD=Dlwodud3424!
+

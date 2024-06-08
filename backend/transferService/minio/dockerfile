@@ -1,0 +1,10 @@
+FROM minio/minio
+
+ENV MINIO_ROOT_USER leeja042499@gmail.com
+ENV MINIO_ROOT_PASSWORD Dlwodud3424!
+ENV MINIO_ADDRESS :9005
+ENV MINIO_CONSOLE_ADDRESS :9006
+
+RUN mkdir ./data
+
+CMD ["server" , "./data"]

@@ -4,20 +4,20 @@ from minio.error import S3Error
 import os
 import tempfile
 import zipfile
-import jwt
 from flask_cors import CORS
 
-jwt_secretKey = "va20ofsl3r08h3n1rjjl"
 
 app = Flask(__name__)
 CORS(app)
 
 minio_client = Minio(
-        '127.0.0.1:9005',
+        '220.149.232.224:9005',
         # access_key=os.getenv('MINIO_ROOT_USER'),
         # secret_key=os.getenv('MINIO_ROOT_PASSWORD'),
-        access_key='minioadmin',
-        secret_key='minioadmin',
+        # access_key='minioadmin',
+        # secret_key='minioadmin',
+        access_key='leeja042499@gmail.com',
+        secret_key='Dlwodud3424!',
         secure=False
 )
 
@@ -126,4 +126,4 @@ def get_bucket_size():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5002, host='0.0.0.0')
+    app.run(debug=True, port=5000, host='0.0.0.0')
