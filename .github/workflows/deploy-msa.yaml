@@ -12,11 +12,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # - name: Set up Python
-      #   uses: actions/setup-python@v2
-      #   with:
-      #     python-version: '3.9'
-
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -27,4 +22,5 @@ jobs:
           username: jimmy
           password: dlwodud3424!
           script: |
-            mkdir sexbo
+            cd ex_storage/OpenDataNexus-ODN
+            docker-compose up
