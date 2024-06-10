@@ -23,4 +23,7 @@ jobs:
           password: dlwodud3424!
           script: |
             cd ex_storage/OpenDataNexus-ODN
-            docker-compose up
+            cd dockerDB
+            docker-compose up -d
+            cd ..
+            docker-compose up -d
