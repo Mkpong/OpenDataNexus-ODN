@@ -1,0 +1,29 @@
+services:
+  userdb:
+    image: user-db-mysql
+    build:
+      context: ../backend/userService/mysql
+    ports:
+      - "3307:3306"
+
+  transferminio:
+    image: transfer-db-minio
+    build:
+      context: ../backend/transferService/minio
+    ports:
+      - "9005:9005"
+      - "9006:9006"
+
+  datasetdb:
+    image: dataset-db-mysql
+    build:
+      context: ../backend/datasetService/mysql
+    ports:
+      - "3309:3306"
+  
+  commentdb:
+    image: comment-db-mysql
+    build: 
+      context: ../backend/commentService/mysql
+    ports:
+      - "3310:3306"
