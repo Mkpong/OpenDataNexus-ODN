@@ -70,7 +70,7 @@ services:
     build: 
       context: ./backend/commentService/mysql
     ports:
-      "3310:3306"
+      - "3310:3306"
 
   frontend:
     image: odn-frontend-react
