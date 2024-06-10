@@ -1,0 +1,31 @@
+name: Deploy MSA server
+
+on:
+  push:
+    branches: ["main"]
+
+permissions: write-all
+
+jobs:
+  build:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      # - name: Set up Python
+      #   uses: actions/setup-python@v2
+      #   with:
+      #     python-version: '3.9'
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+
+      - name: Dev Server Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: 220.149.232.224
+          username: jimmy
+          password: dlwodud3424!
+          script: |
+            mkdir sexbo
