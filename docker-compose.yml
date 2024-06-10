@@ -1,7 +1,9 @@
 services:
   userservice:
-    build: ./backend/userService
-    port:
+    image: user-service-flask
+    build:
+      context: ./backend/userService
+    ports:
       - "5001:5000"
     environment:
       FLASK_ENV: development
@@ -9,8 +11,10 @@ services:
       - userdb
 
   transferservice:
-    build: ./backend/transferService
-    port:
+    image: transfer-service-flask
+    build: 
+      context: ./backend/transferService
+    ports:
       - "5002:5000"
     environment:
       FLASK_ENV: development
@@ -18,8 +22,10 @@ services:
       - transferminio
 
   datasetservice:
-    build: ./backend/datasetService
-    port:
+    image: dataset-service-flask
+    build:
+      context: ./backend/datasetService
+    ports:
       - "5003:5000"
     environment:
       FLASK_ENV: development
@@ -27,8 +33,10 @@ services:
       - datasetdb
 
   commentservice:
-    build: ./backend/commentService
-    port:
+    image: comment-service-flask
+    build:
+      context: ./backend/commentService
+    ports:
       - "5004:5000"
     environment:
       FLASK_ENV: development
@@ -36,29 +44,39 @@ services:
       - commentdb
 
   userdb:
-    build: ./backend/userService/mysql
-    port:
+    image: user-db-mysql
+    build:
+      context: ./backend/userService/mysql
+    ports:
       - "3307:3306"
 
   transferminio:
-    build: ./backend/transferService/minio
-    port:
+    image: transfer-db-minio
+    build:
+      context: ./backend/transferService/minio
+    ports:
       - "9005:9005"
       - "9006:9006"
 
   datasetdb:
-    build: ./backend/datasetService/mysql
-    port:
+    image: dataset-db-mysql
+    build:
+      context: ./backend/datasetService/mysql
+    ports:
       - "3309:3306"
   
   commentdb:
-    build: ./backend/commentService/mysql
-    port:
+    image: comment-db-mysql
+    build: 
+      context: ./backend/commentService/mysql
+    ports:
       "3310:3306"
 
   frontend:
-    build: ./frontend
-    port:
+    image: odn-frontend-react
+    build:
+      context: ./frontend
+    ports:
       - "3000:3000"
     environment:
       NODE_ENV: development
