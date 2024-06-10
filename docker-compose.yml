@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  userservice:
+    build:
+      context: ./backend/userService
+    ports:
+      - "5001:5000"
+    environment:
+      FLASK_ENV: development
+    depends_on:
+      - userdb
+
+  transferservice:
+    build:
+      context: ./backend/transferService
+    ports:
+      - "5002:5000"
+    environment:
+      FLASK_ENV: development
+    depends_on:
+      - transferminio
+
+  datasetservice:
+    build:
+      context: ./backend/datasetService
+    ports:
+      - "5003:5000"
+    environment:
+      FLASK_ENV: development
+    depends_on:
+      - datasetdb
+
+  commentservice:
+    build:
+      context: ./backend/commentService
+    ports:
+      - "5004:5000"
+    environment:
+      FLASK_ENV: development
+    depends_on:
+      - commentdb
+
+  userdb:
+    build:
+      context: ./backend/userService/mysql
+    ports:
+      - "3307:3306"
+
+  transferminio:
+    build:
+      context: ./backend/transferService/minio
+    ports:
+      - "9005-9006:9005-9006"
+
+  datasetdb:
+    build:
+      context: ./backend/datasetService/mysql
+    ports:
+      - "3309:3306"
+  
+  commentdb:
+    build:
+      context: ./backend/commentService/mysql
+    ports:
+      "3310:3306"
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
