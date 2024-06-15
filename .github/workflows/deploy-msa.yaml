@@ -24,13 +24,17 @@ jobs:
           script: |
             alias kubectl=/usr/bin/kubectl
             cd ex_storage/OpenDataNexus-ODN
-            sudo docker rm $(sudo docker ps -a -q)
-            sudo docker rmi -f $(sudo docker images -q)
-            sudo docker-compose build
-            sudo docker-compose push
+            docker rm $(sudo docker ps -a -q)
+            docker rmi -f $(sudo docker images -q)
+            docker-compose build
+            docker-compose push
             kubectl delete deployment --all
             kubectl delete service --all
+            kubectl delete pv --all
+            kubectl delete pvc --all
             cd kube
+            kubectl apply -f persistentVolume.yaml
+            kubectl apply -f persistentVolumeClaim.yaml
             kubectl apply -f flask-server-deployment.yaml
             kubectl apply -f minio-db-deployment.yaml
             kubectl apply -f mysql-db-deployment.yaml
