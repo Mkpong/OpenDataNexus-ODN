@@ -24,8 +24,6 @@ jobs:
           script: |
             alias kubectl=/usr/bin/kubectl
             cd ex_storage/OpenDataNexus-ODN
-            docker rm $(sudo docker ps -a -q)
-            docker rmi -f $(sudo docker images -q)
             docker-compose build
             docker-compose push
             kubectl delete deployment --all
@@ -45,5 +43,6 @@ jobs:
             kubectl apply -f mysql-db-service.yaml
             kubectl apply -f nginx-service.yaml
             kubectl apply -f react-app-service.yaml
+          timeout-minutes: 60 # 60분으로 Timeout 설정
             
 
