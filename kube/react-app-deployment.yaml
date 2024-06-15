@@ -17,3 +17,8 @@ spec:
           image: mkpong/odn-frontend-react:latest
           ports:
             - containerPort: 3000
+          resources:
+            limits:
+              cpu: 1
+            requests:
+              cpu: 200m

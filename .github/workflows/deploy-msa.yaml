@@ -1,48 +1,48 @@
-name: Deploy MSA server
+# name: Deploy MSA server
 
-on:
-  push:
-    branches: ["main"]
+# on:
+#   push:
+#     branches: ["main"]
 
-permissions: write-all
+# permissions: write-all
 
-jobs:
-  build:
-    name: Deploy
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     name: Deploy
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v3
 
-      - name: Dev Server Deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: 220.149.232.224
-          username: jimmy
-          password: dlwodud3424!
-          script: |
-            alias kubectl=/usr/bin/kubectl
-            cd ex_storage/OpenDataNexus-ODN
-            docker-compose build
-            docker-compose push
-            kubectl delete deployment --all
-            kubectl delete service --all
-            kubectl delete pv --all
-            kubectl delete pvc --all
-            cd kube
-            kubectl apply -f persistentVolume.yaml
-            kubectl apply -f persistentVolumeClaim.yaml
-            kubectl apply -f flask-server-deployment.yaml
-            kubectl apply -f minio-db-deployment.yaml
-            kubectl apply -f mysql-db-deployment.yaml
-            kubectl apply -f nginx-deployment.yaml
-            kubectl apply -f react-app-deployment.yaml
-            kubectl apply -f flask-server-service.yaml
-            kubectl apply -f minio-db-service.yaml
-            kubectl apply -f mysql-db-service.yaml
-            kubectl apply -f nginx-service.yaml
-            kubectl apply -f react-app-service.yaml
-          timeout-minutes: 60 # 60분으로 Timeout 설정
+#       - name: Dev Server Deploy
+#         uses: appleboy/ssh-action@master
+#         with:
+#           host: 220.149.232.224
+#           username: jimmy
+#           password: dlwodud3424!
+#           script: |
+#             alias kubectl=/usr/bin/kubectl
+#             cd ex_storage/OpenDataNexus-ODN
+#             docker-compose build
+#             docker-compose push
+#             kubectl delete deployment --all
+#             kubectl delete service --all
+#             kubectl delete pv --all
+#             kubectl delete pvc --all
+#             cd kube
+#             kubectl apply -f persistentVolume.yaml
+#             kubectl apply -f persistentVolumeClaim.yaml
+#             kubectl apply -f flask-server-deployment.yaml
+#             kubectl apply -f minio-db-deployment.yaml
+#             kubectl apply -f mysql-db-deployment.yaml
+#             kubectl apply -f nginx-deployment.yaml
+#             kubectl apply -f react-app-deployment.yaml
+#             kubectl apply -f flask-server-service.yaml
+#             kubectl apply -f minio-db-service.yaml
+#             kubectl apply -f mysql-db-service.yaml
+#             kubectl apply -f nginx-service.yaml
+#             kubectl apply -f react-app-service.yaml
+#           timeout-minutes: 60 # 60분으로 Timeout 설정
             
 
