@@ -23,4 +23,6 @@ spec:
               mountPath: /data
       volumes:
         - name: data
-          emptyDir: {}
+          hostPath:
+            path: /home/jimmy/ex_storage/database
+            type: DirectoryOrCreate
