@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minio-transfer-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio-transfer
+  template:
+    metadata:
+      labels:
+        app: minio-transfer
+    spec:
+      containers:
+        - name: minio-transfer
+          image: mkpong/transfer-db-minio:latest
+          ports:
+            - containerPort: 9005  # MinIO 서비스 포트
+            - containerPort: 9006  # MinIO 관리 콘솔 포트
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          emptyDir: {}

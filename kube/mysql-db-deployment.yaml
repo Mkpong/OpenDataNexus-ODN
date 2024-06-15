@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-user-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-user
+  template:
+    metadata:
+      labels:
+        app: mysql-user
+    spec:
+      containers:
+        - name: mysql-user
+          image: mkpong/user-db-mysql:latest
+          ports:
+            - containerPort: 3306
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-dataset-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-dataset
+  template:
+    metadata:
+      labels:
+        app: mysql-dataset
+    spec:
+      containers:
+        - name: mysql-dataset
+          image: mkpong/dataset-db-mysql:latest
+          ports:
+            - containerPort: 3306
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-comment-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-comment
+  template:
+    metadata:
+      labels:
+        app: mysql-comment
+    spec:
+      containers:
+        - name: mysql-comment
+          image: mkpong/comment-db-mysql:latest
+          ports:
+            - containerPort: 3306

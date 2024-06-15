@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-user-service
+spec:
+  selector:
+    app: flask-user
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-dataset-service
+spec:
+  selector:
+    app: flask-dataset
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-comment-service
+spec:
+  selector:
+    app: flask-comment
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-transfer-service
+spec:
+  selector:
+    app: flask-transfer
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000

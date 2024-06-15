@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-user-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-user
+  template:
+    metadata:
+      labels:
+        app: flask-user
+    spec:
+      initContainers:
+        - name: init-mysql-check
+          image: busybox
+          command: ['sh', '-c', 'until nc -z mysql-user-service 3306; do echo waiting for mysql-user; sleep 2; done; echo mysql-user is up']
+      containers:
+        - name: flask-user
+          image: mkpong/user-service-flask:latest
+          ports:
+            - containerPort: 5000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-dataset-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-dataset
+  template:
+    metadata:
+      labels:
+        app: flask-dataset
+    spec:
+      initContainers:
+        - name: init-mysql-check
+          image: busybox
+          command: ['sh', '-c', 'until nc -z mysql-dataset-service 3306; do echo waiting for mysql-user; sleep 2; done; echo mysql-user is up']
+      containers:
+        - name: flask-dataset
+          image: mkpong/dataset-service-flask:latest
+          ports:
+            - containerPort: 5000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-comment-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-comment
+  template:
+    metadata:
+      labels:
+        app: flask-comment
+    spec:
+      initContainers:
+        - name: init-mysql-check
+          image: busybox
+          command: ['sh', '-c', 'until nc -z mysql-comment-service 3306; do echo waiting for mysql-user; sleep 2; done; echo mysql-user is up']
+      containers:
+        - name: flask-comment
+          image: mkpong/comment-service-flask:latest
+          ports:
+            - containerPort: 5000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-transfer-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-transfer
+  template:
+    metadata:
+      labels:
+        app: flask-transfer
+    spec:
+      initContainers:
+        - name: init-minio-check
+          image: busybox
+          command: ['sh', '-c', 'until nc -z minio-transfer-service 9005; do echo waiting for minio; sleep 2; done; echo minio is up']
+      containers:
+        - name: flask-transfer
+          image: mkpong/transfer-service-flask:latest
+          ports:
+            - containerPort: 5000
