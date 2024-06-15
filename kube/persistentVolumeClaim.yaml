@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-user-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  volumeName: mysql-user-pv
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-dataset-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  volumeName: mysql-dataset-pv
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-comment-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  volumeName: mysql-comment-pv

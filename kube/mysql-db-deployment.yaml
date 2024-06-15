@@ -17,6 +17,13 @@ spec:
           image: mkpong/user-db-mysql:latest
           ports:
             - containerPort: 3306
+          volumeMounts:
+            - name: data-user
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: data-user
+          persistentVolumeClaim:
+            claimName: mysql-user-pvc
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -37,6 +44,13 @@ spec:
           image: mkpong/dataset-db-mysql:latest
           ports:
             - containerPort: 3306
+          volumeMounts:
+            - name: data-dataset
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: data-dataset
+          persistentVolumeClaim:
+            claimName: mysql-dataset-pvc
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -57,3 +71,10 @@ spec:
           image: mkpong/comment-db-mysql:latest
           ports:
             - containerPort: 3306
+          volumeMounts:
+            - name: data-comment
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: data-comment
+          persistentVolumeClaim:
+            claimName: mysql-comment-pvc
