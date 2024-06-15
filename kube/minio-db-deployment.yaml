@@ -24,5 +24,5 @@ spec:
       volumes:
         - name: data
           hostPath:
-            path: /home/jimmy/ex_storage/database
+            path: /home/jimmy/ex_storage/database/minio # 해당 호스트 디렉토리에 마운트 -> 데이터 저장
             type: DirectoryOrCreate
