@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 const handleDownload = (bucketName, bucketId) => {
   // 서버에 GET 요청을 보냅니다.
   axios({
-    url: 'http://220.149.232.224/api/transfer/download/all/' + bucketId,
+    url: 'http://220.149.232.224:30080/api/transfer/download/all/' + bucketId,
     method: 'GET',
     responseType: 'blob'
   }).then(response => {
@@ -21,7 +21,7 @@ const handleDownload = (bucketName, bucketId) => {
     link.setAttribute('download', bucketName + '.zip');  // 실제 파일명을 지정합니다.
     document.body.appendChild(link);
     link.click();
-    axios.put(`http://220.149.232.224/api/dataset/data/downloadcnt/${bucketId}`)
+    axios.put(`http://220.149.232.224:30080/api/dataset/data/downloadcnt/${bucketId}`)
   }).catch(error => {
     // 파일 다운로드가 실패했을 때의 처리
     alert("다운로드 할 수 없습니다!")
@@ -44,7 +44,7 @@ const DetailTop = (props) => {
   }, [])
 
   const handleDelete = () => {
-    axios.delete(`http://220.149.232.224/api/dataset/metadata?id=${props.dataset.id}`)
+    axios.delete(`http://220.149.232.224:30080/api/dataset/metadata?id=${props.dataset.id}`)
     .then((response) => {
       console.log(response);
       window.location.href = "/";

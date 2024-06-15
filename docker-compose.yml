@@ -1,48 +1,60 @@
 services:
-  userservice:
-    image: user-service-flask
+  nginx:
     build:
-      context: ./backend/userService
-    ports:
-      - "5001:5000"
-    environment:
-      FLASK_ENV: development
+      context: ./backend
+      dockerfile: dockerfile
+    image: mkpong/gateway-nginx:latest
 
-
-  transferservice:
-    image: transfer-service-flask
-    build: 
-      context: ./backend/transferService
-    ports:
-      - "5002:5000"
-    environment:
-      FLASK_ENV: development
-
-
-  datasetservice:
-    image: dataset-service-flask
-    build:
-      context: ./backend/datasetService
-    ports:
-      - "5003:5000"
-    environment:
-      FLASK_ENV: development
-
-  commentservice:
-    image: comment-service-flask
-    build:
-      context: ./backend/commentService
-    ports:
-      - "5004:5000"
-    environment:
-      FLASK_ENV: development
-
-  frontend:
-    image: odn-frontend-react
+  react:
     build:
       context: ./frontend
-    ports:
-      - "3000:3000"
-    environment:
-      NODE_ENV: development
+      dockerfile: dockerfile
+    image: mkpong/odn-frontend-react:latest
+  
+  flask-user:
+    build:
+      context: ./backend/userService
+      dockerfile: dockerfile
+    image: mkpong/user-service-flask:latest
 
+  flask-dataset:
+    build:
+      context: ./backend/datasetService
+      dockerfile: dockerfile
+    image: mkpong/dataset-service-flask:latest
+
+  flask-comment:
+    build:
+      context: ./backend/commentService
+      dockerfile: dockerfile
+    image: mkpong/comment-service-flask:latest
+
+  flask-transfer:
+    build:
+      context: ./backend/transferService
+      dockerfile: dockerfile
+    image: mkpong/transfer-service-flask:latest
+  
+  minio:
+    build:
+      context: ./backend/transferService/minio
+      dockerfile: dockerfile
+    image: mkpong/transfer-db-minio:latest
+  
+  mysql-user:
+    build:
+      context: ./backend/userService/mysql
+      dockerfile: dockerfile
+    image: mkpong/user-db-mysql:latest
+
+  mysql-dataset:
+    build:
+      context: ./backend/datasetService/mysql
+      dockerfile: dockerfile
+    image: mkpong/dataset-db-mysql:latest
+  
+  mysql-comment:
+    build:
+      context: ./backend/commentService/mysql
+      dockerfile: dockerfile
+    image: mkpong/comment-db-mysql:latest

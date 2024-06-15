@@ -113,7 +113,7 @@ function SearchMain(props) {
     const handleSearch = async () => {
         console.log(searchParams)
         try {
-            const response = await axios.get(`http://220.149.232.224/api/dataset/data/search?type=${searchParams.type}&field=${searchParams.field}&keyword=${searchParams.keyword}`, searchParams);
+            const response = await axios.get(`http://220.149.232.224:30080/api/dataset/data/search?type=${searchParams.type}&field=${searchParams.field}&keyword=${searchParams.keyword}`, searchParams);
             setDatasets(response.data);
             // 응답 데이터를 처리하는 로직 추가
         } catch (error) {
@@ -129,12 +129,12 @@ function SearchMain(props) {
                 ['type']: location.state.type,
                 ['keyword']: location.state.keyword
             })
-            axios.get(`http://220.149.232.224/api/dataset/data/search?type=${location.state.type}&field=${location.state.field}&keyword=${location.state.keyword}`)
+            axios.get(`http://220.149.232.224:30080/api/dataset/data/search?type=${location.state.type}&field=${location.state.field}&keyword=${location.state.keyword}`)
             .then((response) => setDatasets(response.data))
             .catch((error) => console.log(error))
         }
         else{
-            axios.get(`http://220.149.232.224/api/dataset/data/search?type=${searchParams.type}&field=${searchParams.field}&keyword=${searchParams.keyword}`)
+            axios.get(`http://220.149.232.224:30080/api/dataset/data/search?type=${searchParams.type}&field=${searchParams.field}&keyword=${searchParams.keyword}`)
             .then((response) => setDatasets(response.data))
             .catch((error) => console.log(error))           
         }

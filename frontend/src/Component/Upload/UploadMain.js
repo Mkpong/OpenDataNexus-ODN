@@ -84,7 +84,7 @@ function UploadMain() {
     const handleFind = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.get(`http://220.149.232.224/api/dataset/one?bucketname=${metadata.bucketName}`)
+            const response = await axios.get(`http://220.149.232.224:30080/api/dataset/one?bucketname=${metadata.bucketName}`)
             if(response.data.message =="생성가능"){
                 // 조회버튼 비활성화
                 setIsUpload(true);
@@ -117,7 +117,7 @@ function UploadMain() {
     event.preventDefault();
     // 파일을 처리하는 로직을 여기에 추가합니다.
     try {
-        const response = await axios.post('http://220.149.232.224/api/dataset/metadata', metadata);
+        const response = await axios.post('http://220.149.232.224:30080/api/dataset/metadata', metadata);
         const bucketId = response.data.bucketId;
         console.log(response.data);
         console.log(response.data.bucketId);
@@ -126,7 +126,7 @@ function UploadMain() {
             const formData = new FormData();
             formData.append(`file` , file);
             try {
-                const response = await axios.post(`http://220.149.232.224/api/dataset/data/${bucketId}`, formData, {
+                const response = await axios.post(`http://220.149.232.224:30080/api/dataset/data/${bucketId}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -134,7 +134,7 @@ function UploadMain() {
             } catch (error) {
             }
         })
-        axios.put(`http://220.149.232.224/api/dataset/data/size/${bucketId}`)
+        axios.put(`http://220.149.232.224:30080/api/dataset/data/size/${bucketId}`)
         .then((response) => console.log(response))
         .catch((error) => console.log(error))
         navigate("/");

@@ -9,7 +9,7 @@ function MainBody() {
     const [datasets, setDatasets] = useState([]);
 
     useEffect(() => {
-        axios.get("http://220.149.232.224/api/dataset/all")
+        axios.get("http://220.149.232.224:30080/api/dataset/all")
         .then((response) => setDatasets(response.data))
         .catch((error) => console.log(error))
     } , []);

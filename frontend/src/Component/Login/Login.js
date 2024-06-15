@@ -20,7 +20,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // 여기서 로그인 요청을 보내고 처리하는 로직을 구현합니다.
-    axios.post("http://220.149.232.224/api/user/login" , {"email": email, "passwd": password})
+    axios.post("http://220.149.232.224:30080/api/user/login" , {"email": email, "passwd": password})
     .then((response) => {
       console.log(response.data);
       const token = response.data.token;

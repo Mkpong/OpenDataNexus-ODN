@@ -11,11 +11,7 @@ app = Flask(__name__)
 CORS(app)
 
 minio_client = Minio(
-        '220.149.232.224:9005',
-        # access_key=os.getenv('MINIO_ROOT_USER'),
-        # secret_key=os.getenv('MINIO_ROOT_PASSWORD'),
-        # access_key='minioadmin',
-        # secret_key='minioadmin',
+        'minio-transfer-service:9005',
         access_key='leeja042499@gmail.com',
         secret_key='Dlwodud3424!',
         secure=False

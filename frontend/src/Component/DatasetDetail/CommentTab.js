@@ -16,7 +16,7 @@ function CommentView(props) {
     })
 
     const deleteComment = () => {
-        axios.delete(`http://220.149.232.224/api/comment?id=${props.comment.id}`)
+        axios.delete(`http://220.149.232.224:30080/api/comment?id=${props.comment.id}`)
         .then((response) => {
             console.log(response)
             window.location.href = `/datasets/${props.datasetid}`;
@@ -86,7 +86,7 @@ function CommentTab(props) {
         }
         if(!isWrite){
         // 리뷰 데이터 불러오기
-            axios.get(`http://220.149.232.224/api/comment?id=${props.dataset.id}`)
+            axios.get(`http://220.149.232.224:30080/api/comment?id=${props.dataset.id}`)
             .then((response) => {
                 console.log(response);
                 setComments(response.data);
@@ -101,7 +101,7 @@ function CommentTab(props) {
         }
         else{
             if(isModify.status){
-                axios.put(`http://220.149.232.224/api/comment?id=${isModify.commentId}`, comment)
+                axios.put(`http://220.149.232.224:30080/api/comment?id=${isModify.commentId}`, comment)
                 .then((response)=>{
                     console.log(response.data);
                     window.location.href = `/datasets/${props.dataset.id}`;
@@ -109,7 +109,7 @@ function CommentTab(props) {
                 setIsModify.status(false);
             }
             else{
-                axios.post("http://220.149.232.224/api/comment", comment)
+                axios.post("http://220.149.232.224:30080/api/comment", comment)
                 .then((response) => {
                     window.location.href = `/datasets/${props.dataset.id}`;
                 })

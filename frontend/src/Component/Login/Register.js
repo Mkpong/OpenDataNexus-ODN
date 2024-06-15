@@ -30,12 +30,12 @@ const Register = () => {
     if (registerData.email === '') {
       setEmailError('이메일을 입력해주세요.');
     } else {
-      axios.post("http://220.149.232.224/api/user/register/email" , {'email': registerData.email})
+      axios.post("http://220.149.232.224:30080/api/user/register/email" , {'email': registerData.email})
       .then((response) => {
         if(response.data.message === 'Ok'){
           console.log("success");
           setEmailError('가입 가능한 이메일 입니다 :)')
-          setIsEmailValid(true);
+          setIsEmailValid(true);ㅏㅕ
         }
         else{
           console.log("already Existing")
@@ -57,7 +57,7 @@ const Register = () => {
     }
     else {
     // 회원가입 요청을 보내고 처리하는 로직을 구현합니다.
-    axios.post("http://220.149.232.224/api/user/register", registerData)
+    axios.post("http://220.149.232.224:30080/api/user/register", registerData)
     .then((response) => {
       console.log(response.data.message);
       navigate("/");

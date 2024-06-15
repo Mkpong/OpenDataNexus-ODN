@@ -22,8 +22,24 @@ jobs:
           username: jimmy
           password: dlwodud3424!
           script: |
+            alias kubectl=/usr/bin/kubectl
             cd ex_storage/OpenDataNexus-ODN
-            cd dockerDB
-            docker-compose up -d
-            cd ..
-            docker-compose up -d
+            sudo docker rm $(sudo docker ps -a -q)
+            sudo docker rmi -f $(sudo docker images -q)
+            sudo docker-compose build
+            sudo docker-compose push
+            kubectl delete deployment --all
+            kubectl delete service --all
+            cd kube
+            kubectl apply -f flask-server-deployment.yaml
+            kubectl apply -f minio-db-deployment.yaml
+            kubectl apply -f mysql-db-deployment.yaml
+            kubectl apply -f nginx-deployment.yaml
+            kubectl apply -f react-app-deployment.yaml
+            kubectl apply -f flask-server-service.yaml
+            kubectl apply -f minio-db-service.yaml
+            kubectl apply -f mysql-db-service.yaml
+            kubectl apply -f nginx-service.yaml
+            kubectl apply -f react-app-service.yaml
+            
+

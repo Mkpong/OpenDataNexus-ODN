@@ -10,7 +10,7 @@ const DetailMain = () => {
   const [dataset, setDataset] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://220.149.232.224/api/dataset/one?id=${id}`)
+    axios.get(`http://220.149.232.224:30080/api/dataset/one?id=${id}`)
     .then((response) => {setDataset(response.data)})
     .catch((error) => console.log(error))
   }, [id]);

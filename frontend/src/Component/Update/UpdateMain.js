@@ -31,7 +31,7 @@ function UpdateMain() {
 
 
     useEffect(() => {
-        axios.get(`http://220.149.232.224/api/dataset/one?id=${id}`)
+        axios.get(`http://220.149.232.224:30080/api/dataset/one?id=${id}`)
         .then((response) => {
             setMetadata({
                 ...metadata,
@@ -81,14 +81,14 @@ function UpdateMain() {
         }
         // 파일을 처리하는 로직을 여기에 추가합니다.
         try {
-            const response = await axios.put('http://220.149.232.224/api/dataset/metadata', metadata);
+            const response = await axios.put('http://220.149.232.224:30080/api/dataset/metadata', metadata);
             const bucketId = response.data.bucketId;
             console.log(response.data);
             selectedFiles.forEach(async (file, index) => {
                 const formData = new FormData();
                 formData.append(`file` , file);
                 try {
-                    const response = await axios.post(`http://220.149.232.224/api/dataset/data/${bucketId}`, formData, {
+                    const response = await axios.post(`http://220.149.232.224:30080/api/dataset/data/${bucketId}`, formData, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
                         }
@@ -96,7 +96,7 @@ function UpdateMain() {
                 } catch (error) {
                 }
             })
-            axios.put(`http://220.149.232.224/api/dataset/data/size/${bucketId}`)
+            axios.put(`http://220.149.232.224:30080/api/dataset/data/size/${bucketId}`)
             .then((response) => console.log(response))
             .catch((error) => console.log(error))
             navigate("/");

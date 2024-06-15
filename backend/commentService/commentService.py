@@ -7,7 +7,7 @@ import secrets
 import string
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:Dlwodud3424!@220.149.232.224:3310/commentODN'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:Dlwodud3424!@mysql-comment-service:3306/commentODN'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)

@@ -7,7 +7,7 @@ import secrets
 import string
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:Dlwodud3424!@220.149.232.224:3309/datasetODN'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://admin:Dlwodud3424!@mysql-dataset-service:3306/datasetODN'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -161,7 +161,7 @@ def delete_dataset():
     bucketId = metadata.bucketId
 
     # 버킷에서 해당 데이터 셋 삭제
-    response_transfer = requests.delete(f"http://220.149.232.224/api/transfer?id={bucketId}")
+    response_transfer = requests.delete(f"http://220.149.232.224:30080/api/transfer?id={bucketId}")
     if response_transfer.status_code == 500:
         # 버킷 삭제 실패시 오류 반환
         response = make_response(jsonify({"message" : "버킷 삭제 실패!"}), 500)
@@ -175,7 +175,7 @@ def delete_dataset():
     #     return response
 
     # 해당 dataset id를 가지고 있는 모든 comment 삭제 로직 구현
-    response_comment = requests.delete(f"http://220.149.232.224/api/comment/all?id={metadata.id}")
+    response_comment = requests.delete(f"http://220.149.232.224:30080/api/comment/all?id={metadata.id}")
     if response_comment == 500:
         response = make_response(jsonify({"message" : "Comment 삭제 실패!"}), 500)
         response.headers.add("Access-Control-Allow-Origin", '*')
@@ -215,7 +215,7 @@ def add_data(bucketid):
     file = files["file"]
     file_data = {'file': (file.filename, file.stream, file.content_type)}
     data = {'bucket': bucketid }
-    response = requests.post("http://220.149.232.224/api/transfer/upload", files=file_data, data=data)
+    response = requests.post("http://220.149.232.224:30080/api/transfer/upload", files=file_data, data=data)
     print(response)
     return "Not Implement"
 
@@ -225,7 +225,7 @@ def update_dataset_size(bucketid):
     bucket = Metadata.query.filter_by(bucketId=bucketid).first()
     if not bucket:
         return jsonify({"message" : "Not Found bucket"}), 404
-    response = requests.get(f"http://220.149.232.224/api/transfer/bucketsize?bucketid={bucketid}")
+    response = requests.get(f"http://220.149.232.224:30080/api/transfer/bucketsize?bucketid={bucketid}")
     size = response.json().get('size')
     if size:
         bucket.size = size
